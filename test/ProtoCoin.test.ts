@@ -68,4 +68,13 @@ describe("ProtoCoin Tests", function () {
       "Insufficient balance."
     )
   })
+
+  it("Should approve", async function () {
+    const { protoCoin, owner, otherAccount } = await loadFixture(deployFixture)
+
+    await protoCoin.approve(otherAccount, 1)
+    const allowance = await protoCoin.allowance(owner, otherAccount)
+
+    expect(allowance).to.equal(1)
+  })
 })
