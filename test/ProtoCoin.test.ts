@@ -77,4 +77,47 @@ describe("ProtoCoin Tests", function () {
 
     expect(allowance).to.equal(1)
   })
+
+  it("Should transfer from", async function () {
+    const { protoCoin, owner, otherAccount } = await loadFixture(deployFixture)
+
+    const ownerBalanceBefore = await protoCoin.balanceOf(owner)
+    const otherBalanceBefore = await protoCoin.balanceOf(otherAccount)
+
+    await protoCoin.approve(otherAccount, 10)
+
+    const instance = protoCoin.connect(otherAccount)
+    await instance.transferFrom(owner, otherAccount, 5)
+
+    const ownerBalanceAfter = await protoCoin.balanceOf(owner)
+    const otherBalanceAfter = await protoCoin.balanceOf(otherAccount)
+    const allowance = await protoCoin.allowance(owner, otherAccount)
+
+    expect(ownerBalanceBefore).to.equal(100n * 10n ** 18n)
+    expect(otherBalanceBefore).to.equal(0)
+
+    expect(ownerBalanceAfter).to.equal(100n * 10n ** 18n - 5n)
+    expect(otherBalanceAfter).to.equal(5)
+
+    expect(allowance).to.equal(5)
+  })
+
+  it("Should NOT transfer from (balance)", async function () {
+    const { protoCoin, owner, otherAccount } = await loadFixture(deployFixture)
+
+    const instance = protoCoin.connect(otherAccount)
+    await instance.approve(owner, 1)
+
+    await expect(
+      protoCoin.transferFrom(otherAccount, owner, 1)
+    ).to.be.revertedWith("Insufficient balance.")
+  })
+
+  it("Should NOT transfer from (allowance)", async function () {
+    const { protoCoin, owner, otherAccount } = await loadFixture(deployFixture)
+    const instance = protoCoin.connect(otherAccount)
+    await expect(
+      instance.transferFrom(owner, otherAccount, 1)
+    ).to.be.revertedWith("Insufficient allowance.")
+  })
 })
