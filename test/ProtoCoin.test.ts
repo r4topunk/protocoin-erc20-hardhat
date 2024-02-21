@@ -35,4 +35,37 @@ describe("ProtoCoin Tests", function () {
     const totalSupply = await protoCoin.totalSupply()
     expect(totalSupply).to.equal(100n * 10n ** 18n)
   })
+
+  it("Should get balance", async function () {
+    const { protoCoin, owner, otherAccount } = await loadFixture(deployFixture)
+    const balance = await protoCoin.balanceOf(owner)
+    expect(balance).to.equal(100n * 10n ** 18n)
+  })
+
+  it("Should transfer", async function () {
+    const { protoCoin, owner, otherAccount } = await loadFixture(deployFixture)
+
+    const ownerBalanceBefore = await protoCoin.balanceOf(owner)
+    const otherBalanceBefore = await protoCoin.balanceOf(otherAccount)
+
+    await protoCoin.transfer(otherAccount, 1)
+
+    const ownerBalanceAfter = await protoCoin.balanceOf(owner)
+    const otherBalanceAfter = await protoCoin.balanceOf(otherAccount)
+
+    expect(ownerBalanceBefore).to.equal(100n * 10n ** 18n)
+    expect(otherBalanceBefore).to.equal(0)
+
+    expect(ownerBalanceAfter).to.equal(100n * 10n ** 18n - 1n)
+    expect(otherBalanceAfter).to.equal(1)
+  })
+
+  it("Should NOT transfer", async function () {
+    const { protoCoin, owner, otherAccount } = await loadFixture(deployFixture)
+
+    const instance = protoCoin.connect(otherAccount)
+    await expect(instance.transfer(owner, 1)).to.be.revertedWith(
+      "Insufficient balance."
+    )
+  })
 })
