@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+dependencies:
+  dotenv:
+    specifier: ^16.4.5
+    version: 16.4.5
+
 devDependencies:
   '@nomicfoundation/hardhat-chai-matchers':
     specifier: ^2.0.0
@@ -20,6 +25,9 @@ devDependencies:
   '@nomicfoundation/hardhat-verify':
     specifier: ^2.0.0
     version: 2.0.4(hardhat@2.20.1)
+  '@nomiclabs/hardhat-etherscan':
+    specifier: ^3.1.8
+    version: 3.1.8(hardhat@2.20.1)
   '@typechain/ethers-v6':
     specifier: ^0.5.0
     version: 0.5.1(ethers@6.11.1)(typechain@8.3.2)(typescript@5.3.3)
@@ -865,6 +873,27 @@ packages:
       '@nomicfoundation/solidity-analyzer-win32-arm64-msvc': 0.1.1
       '@nomicfoundation/solidity-analyzer-win32-ia32-msvc': 0.1.1
       '@nomicfoundation/solidity-analyzer-win32-x64-msvc': 0.1.1
+    dev: true
+
+  /@nomiclabs/hardhat-etherscan@3.1.8(hardhat@2.20.1):
+    resolution: {integrity: sha512-v5F6IzQhrsjHh6kQz4uNrym49brK9K5bYCq2zQZ729RYRaifI9hHbtmK+KkIVevfhut7huQFEQ77JLRMAzWYjQ==}
+    deprecated: The @nomiclabs/hardhat-etherscan package is deprecated, please use @nomicfoundation/hardhat-verify instead
+    peerDependencies:
+      hardhat: ^2.0.4
+    dependencies:
+      '@ethersproject/abi': 5.7.0
+      '@ethersproject/address': 5.7.0
+      cbor: 8.1.0
+      chalk: 2.4.2
+      debug: 4.3.4(supports-color@8.1.1)
+      fs-extra: 7.0.1
+      hardhat: 2.20.1(ts-node@10.9.2)(typescript@5.3.3)
+      lodash: 4.17.21
+      semver: 6.3.1
+      table: 6.8.1
+      undici: 5.28.3
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /@scure/base@1.1.5:
@@ -1781,6 +1810,11 @@ packages:
     dependencies:
       path-type: 4.0.0
     dev: true
+
+  /dotenv@16.4.5:
+    resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
+    engines: {node: '>=12'}
+    dev: false
 
   /elliptic@6.5.4:
     resolution: {integrity: sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==}
